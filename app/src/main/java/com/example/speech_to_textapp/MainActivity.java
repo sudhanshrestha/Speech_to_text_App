@@ -16,14 +16,14 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_SPEECH_INPUT = 1000;
-    TextView mtxtResult;
      ImageButton mvoiceBtn;
+     String resultTxt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mtxtResult = findViewById(R.id.txtResult);
+
         mvoiceBtn = findViewById(R.id.voiceBtn);
 
         //button on-click action
@@ -31,7 +31,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 speak();
+
             }
+
+
         });
     }
 
@@ -67,10 +70,16 @@ private void speak(){
                     //getting the text array from voice intent
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     //setting the text view
-                    mtxtResult.setText(result.get(0));
+                    resultTxt = result.get(0);
+                    String s = result.get(0);
+                    Intent sendData = new Intent(this,MainActivity2.class);
+                    sendData.putExtra("Voice_Data",s);
+                    startActivity(sendData);
+
                 }
                 break;
             }
         }
     }
+
 }
